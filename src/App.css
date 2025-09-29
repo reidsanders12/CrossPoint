@@ -345,3 +345,49 @@ footer .text-sm { word-break: break-word; }
 
 /* Prevent horizontal scrolling */
 html, body { overflow-x: hidden; }
+
+/* ====== Kill the dead space on large screens (no TSX changes) ====== */
+
+/* Make "max-w-6xl" breathe wider and use most of the viewport */
+@media (min-width: 1024px) {
+  .max-w-6xl {
+    /* Grow beyond 72rem, but cap to viewport so it never looks edge-to-edge cramped */
+    max-width: min(1400px, 96vw);
+  }
+}
+
+/* Let the question grid auto-fill columns instead of stopping at 3 */
+@media (min-width: 768px) {
+  .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3.gap-6.max-w-6xl.mx-auto {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* On very wide screens, allow slightly denser packing */
+@media (min-width: 1440px) {
+  .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3.gap-6.max-w-6xl.mx-auto {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* Nudge the heading + button row so it doesn't look “too far apart” */
+@media (min-width: 1024px) {
+  .flex.justify-between.items-center.mb-6.max-w-6xl.mx-auto {
+    /* tighten the gap without changing markup */
+    gap: 1rem;
+  }
+}
+
+/* Slightly reduce vertical whitespace on tall monitors */
+@media (min-width: 1280px) {
+  .py-8 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+  .mb-6 { margin-bottom: 1.25rem; }
+}
+
+/* Make the "Ask a Question" button stop floating on a lonely island on mid widths */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bg-indigo-600.hover\:bg-indigo-700.text-white.font-bold.py-3.px-6.rounded-lg.transition.duration-200.shadow-xl.flex.items-center {
+    width: 100%;
+    justify-content: center;
+  }
+}
