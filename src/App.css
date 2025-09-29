@@ -1,0 +1,347 @@
+/* -----------------------------------------------------------
+   Crosspoint — Minimal Tailwind-ish CSS + Responsive polish
+   Drop-in for src/App.css (no TSX changes required)
+----------------------------------------------------------- */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root{
+  --bg: #f9fafb;           /* gray-50 */
+  --text: #111827;         /* gray-900 */
+  --muted: #6b7280;        /* gray-500 */
+  --ring: #6366f1;         /* indigo-500 */
+
+  --indigo-50: #eef2ff;
+  --indigo-100:#e0e7ff;
+  --indigo-500:#6366f1;
+  --indigo-600:#4f46e5;
+  --indigo-700:#4338ca;
+
+  --purple-200:#e9d5ff;
+  --purple-500:#a855f7;
+  --purple-600:#9333ea;
+  --purple-700:#7e22ce;
+
+  --gray-50:#f9fafb;
+  --gray-100:#f3f4f6;
+  --gray-200:#e5e7eb;
+  --gray-300:#d1d5db;
+  --gray-500:#6b7280;
+  --gray-600:#4b5563;
+  --gray-700:#374151;
+  --gray-800:#1f2937;
+  --gray-900:#111827;
+
+  --green-100:#dcfce7;
+  --green-500:#22c55e;
+  --green-600:#16a34a;
+  --green-700:#15803d;
+
+  --red-50:#fef2f2;
+  --red-100:#fee2e2;
+  --red-500:#ef4444;
+  --red-600:#dc2626;
+  --red-700:#b91c1c;
+
+  --yellow-600:#ca8a04;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,.08);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,.10);
+  --shadow-2xl: 0 25px 50px rgba(0,0,0,.15);
+
+  --radius: 0.75rem;       /* rounded-xl */
+  --radius-lg: 0.5rem;     /* rounded-lg */
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* Fluid base type for nicer scaling across devices */
+html { font-size: clamp(14px, 1.6vw, 16px); }
+
+/* Ensure media fits the viewport */
+img, svg, video, canvas { max-width: 100%; height: auto; }
+
+/* Slightly larger tap targets */
+button, .cursor-pointer { min-height: 40px; }
+
+/* -----------------------------------------------------------
+   Utilities (subset used in App.tsx)
+----------------------------------------------------------- */
+
+/* Layout */
+.flex{display:flex}
+.items-center{align-items:center}
+.items-start{align-items:flex-start}
+.items-stretch{align-items:stretch}
+.justify-between{justify-content:space-between}
+.justify-center{justify-content:center}
+.sticky{position:sticky}
+.top-0{top:0}
+.z-10{z-index:10}
+
+.grid{display:grid}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.gap-6{gap:1.5rem}
+
+.flex-wrap{flex-wrap:wrap}
+.flex-col{flex-direction:column}
+
+/* Spacing */
+.p-1{padding:.25rem}
+.p-4{padding:1rem}
+.p-6{padding:1.5rem}
+.p-8{padding:2rem}
+.px-3{padding-left:.75rem;padding-right:.75rem}
+.px-4{padding-left:1rem;padding-right:1rem}
+.px-6{padding-left:1.5rem;padding-right:1.5rem}
+.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}
+.py-1{padding-top:.25rem;padding-bottom:.25rem}
+.py-2{padding-top:.5rem;padding-bottom:.5rem}
+.py-3{padding-top:.75rem;padding-bottom:.75rem}
+.py-8{padding-top:2rem;padding-bottom:2rem}
+.mt-1{margin-top:.25rem}
+.mt-4{margin-top:1rem}
+.mt-6{margin-top:1.5rem}
+.mt-8{margin-top:2rem}
+.mb-2{margin-bottom:.5rem}
+.mb-3{margin-bottom:.75rem}
+.mb-4{margin-bottom:1rem}
+.mb-6{margin-bottom:1.5rem}
+
+/* Width/Max */
+.w-full{width:100%}
+.max-w-xl{max-width:36rem}
+.max-w-2xl{max-width:42rem}
+.max-w-6xl{max-width:72rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+.text-center{text-align:center}
+
+/* Typography */
+.text-xs{font-size:.75rem;line-height:1rem}
+.text-sm{font-size:.875rem;line-height:1.25rem}
+.text-lg{font-size:1.125rem;line-height:1.75rem}
+.text-xl{font-size:1.25rem;line-height:1.75rem}
+.text-3xl{font-size:1.875rem;line-height:2.25rem}
+.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace}
+.font-medium{font-weight:500}
+.font-semibold{font-weight:600}
+.font-bold{font-weight:700}
+.font-extrabold{font-weight:800}
+.uppercase{text-transform:uppercase}
+.tracking-tight{letter-spacing:-0.01em}
+
+/* Colors */
+.text-white{color:#fff}
+.text-gray-500{color:var(--gray-500)}
+.text-gray-600{color:var(--gray-600)}
+.text-gray-700{color:var(--gray-700)}
+.text-gray-800{color:var(--gray-800)}
+.text-gray-900{color:var(--gray-900)}
+.text-indigo-500{color:var(--indigo-500)}
+.text-indigo-600{color:var(--indigo-600)}
+.text-indigo-700{color:var(--indigo-700)}
+.text-green-600{color:var(--green-600)}
+.text-yellow-600{color:var(--yellow-600)}
+.text-red-700{color:var(--red-700)}
+
+.bg-white{background:#fff}
+.bg-gray-50{background:var(--gray-50)}
+.bg-gray-100{background:var(--gray-100)}
+.bg-gray-200{background:var(--gray-200)}
+.bg-indigo-100{background:var(--indigo-100)}
+.bg-indigo-600{background:var(--indigo-600)}
+.bg-purple-500{background:var(--purple-500)}
+.bg-purple-600{background:var(--purple-600)}
+.bg-purple-700{background:var(--purple-700)}
+.bg-green-100{background:var(--green-100)}
+.bg-green-500{background:var(--green-500)}
+.bg-green-600{background:var(--green-600)}
+.bg-red-50{background:var(--red-50)}
+.bg-red-100{background:var(--red-100)}
+.bg-red-500{background:var(--red-500)}
+.bg-yellow-100{background:#fef9c3}
+
+/* Borders & Radius */
+.border{border:1px solid var(--gray-200)}
+.border-gray-100{border-color:var(--gray-100)}
+.border-gray-200{border-color:var(--gray-200)}
+.border-purple-200{border-color:var(--purple-200)}
+.border-red-500{border-color:var(--red-500)}
+.rounded{border-radius:.25rem}
+.rounded-lg{border-radius:var(--radius-lg)}
+.rounded-xl{border-radius:var(--radius)}
+.rounded-full{border-radius:999px}
+.border-t{border-top:1px solid var(--gray-200)}
+.border-l-4{border-left:4px solid currentColor}
+
+/* Shadows */
+.shadow-sm{box-shadow:var(--shadow-sm)}
+.shadow-md{box-shadow:var(--shadow-md)}
+.shadow-lg{box-shadow:var(--shadow-lg)}
+.shadow-2xl{box-shadow:var(--shadow-2xl)}
+.hover\:shadow-xl:hover{box-shadow:0 20px 30px rgba(0,0,0,.12)}
+
+/* Display helpers */
+.hidden{display:none}
+
+/* Transitions */
+.transition{transition:all .2s ease}
+.duration-150{transition-duration:150ms}
+.duration-200{transition-duration:200ms}
+
+/* Cursor */
+.cursor-pointer{cursor:pointer}
+.cursor-not-allowed{cursor:not-allowed}
+
+/* Forms */
+input[type="text"], textarea, select{
+  display:block;
+  width:100%;
+  border:1px solid var(--gray-300);
+  border-radius:var(--radius-lg);
+  padding:.75rem;
+  background:#fff;
+  color:var(--text);
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+input[type="text"]:focus,
+textarea:focus,
+select:focus{
+  border-color:var(--indigo-500);
+  box-shadow:0 0 0 3px rgba(99,102,241,.15);
+}
+
+/* Buttons */
+button{ border:none; outline:none; font:inherit; }
+.bg-indigo-600,
+.bg-purple-500,
+.bg-green-500,
+.bg-red-500{
+  color:#fff;
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-md);
+}
+.bg-indigo-600:hover{background:var(--indigo-700)}
+.bg-purple-500:hover{background:var(--purple-600)}
+.bg-green-500:hover{background:var(--green-600)}
+.bg-red-500:hover{background:var(--red-600)}
+.text-gray-600:hover{color:var(--gray-800)}
+button:disabled{opacity:.6; cursor:not-allowed}
+
+/* Pills / badges */
+.badge,
+.text-xs.font-semibold.uppercase.text-indigo-600.bg-indigo-100{
+  display:inline-block;
+  padding:.25rem .75rem;
+  border-radius:999px;
+  background:var(--indigo-100);
+  color:var(--indigo-600);
+  font-weight:600;
+  font-size:.75rem;
+  text-transform:uppercase;
+}
+
+/* Status chips */
+.bg-red-100.text-red-600,
+.bg-green-100.text-green-600{
+  font-weight:600;
+  border-radius:999px;
+}
+
+/* Cards */
+.bg-white.p-6.rounded-xl{ border:1px solid var(--gray-100); }
+.bg-white.p-6.rounded-xl:hover{ transform:translateY(-1px); }
+
+/* Header polish */
+header.bg-white.shadow-md{
+  backdrop-filter:saturate(1.2) blur(6px);
+  background:rgba(255,255,255,0.9);
+  border-bottom:1px solid var(--gray-100);
+}
+
+/* Footer */
+footer{ background:#fff; }
+
+/* Line clamp (for question preview) */
+.line-clamp-2{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+/* Accessibility tweak */
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+  outline:2px solid var(--ring);
+  outline-offset:2px;
+}
+
+/* Utility combos used for error panel */
+.bg-white.p-6.rounded-xl.shadow-lg.border-l-4.border-red-500{
+  border-left-color:var(--red-500);
+}
+
+/* Subtle hover for list items (quiz options) */
+.p-4.border.rounded-lg.hover\:bg-gray-50:hover{ background:var(--gray-50); }
+
+/* -----------------------------------------------------------
+   Responsive polish (no TSX changes)
+----------------------------------------------------------- */
+
+/* Header: wrap gracefully on small screens */
+header.bg-white.shadow-md.p-4.flex.justify-between.items-center {
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  header.bg-white.shadow-md.p-4.flex.justify-between.items-center { justify-content: center; }
+  header .flex.items-center.space-x-4 { gap: .5rem; flex-wrap: wrap; }
+}
+
+/* Primary buttons go full-width on phones for easier tapping */
+@media (max-width: 767px) {
+  .bg-indigo-600,
+  .bg-purple-500,
+  .bg-green-500 {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Forms: comfortable inputs on tiny devices */
+@media (max-width: 360px) {
+  .p-6 { padding: 1.25rem; }
+  .px-6 { padding-left: 1.25rem; padding-right: 1.25rem; }
+  input[type="text"], textarea, select { font-size: 0.95rem; }
+}
+
+/* Feed grid: ensure 2 columns on small tablets even if only grid-cols-1 is present */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .grid.grid-cols-1.max-w-6xl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Card and headline scale down nicely on very small screens */
+@media (max-width: 480px) {
+  .bg-white.p-6.rounded-xl { padding: 1.25rem; }
+  .text-3xl { font-size: 1.5rem; line-height: 2rem; }
+  .text-xl { font-size: 1.125rem; line-height: 1.75rem; }
+}
+
+/* Footer: avoid overflow */
+footer .text-sm { word-break: break-word; }
+
+/* Prevent horizontal scrolling */
+html, body { overflow-x: hidden; }

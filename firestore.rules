@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function authed() { return request.auth != null; }
+    match /artifacts/{appId}/public/data {
+      match /questions/{qid} {
+        allow read: if true;
+        allow create: if authed() && request.resource.data.authorId == request.auth.uid;
+      }
+      match /expert_verifications/{uid} {
+        allow read: if authed() && request.auth.uid == uid;
+        allow write: if authed() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['displayName','verifiedCategories','lastUpdated']);
+      }
+    }
+  }
+}
