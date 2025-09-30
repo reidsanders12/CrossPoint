@@ -377,6 +377,28 @@ html, body { overflow-x: hidden; }
     gap: 1rem;
   }
 }
+/* ===========================================================
+   FULL-WIDTH OVERRIDE (for all content constrained by max-w-6xl)
+   =========================================================== */
+
+/* 1. Remove the maximum width constraint */
+.max-w-6xl {
+  max-width: none !important; /* Force content to stretch */
+}
+
+/* 2. Remove the auto-margins that center the content */
+.mx-auto {
+  margin-left: initial !important; /* Remove automatic centering */
+  margin-right: initial !important;
+}
+
+/* 3. Handle the responsiveness tweaks in your existing CSS */
+/* Your custom media query that sets max-width: min(1400px, 96vw) */
+@media (min-width: 1024px) {
+  .max-w-6xl {
+    max-width: none !important;
+  }
+}
 
 /* Slightly reduce vertical whitespace on tall monitors */
 @media (min-width: 1280px) {

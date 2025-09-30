@@ -161,10 +161,14 @@ const App: React.FC = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [appState, setAppState] = useState<'feed' | 'post' | 'quiz'>('feed');
+  // UPDATED: Added 'answer' state
+  const [appState, setAppState] = useState<'feed' | 'post' | 'quiz' | 'answer'>('feed');
 
   // Quiz state
   const [activeQuizCategory, setActiveQuizCategory] = useState<string | null>(null);
+
+  // ADDED: State to track the question currently being answered
+  const [activeQuestion, setActiveQuestion] = useState<QuestionDoc | null>(null);
 
   // Data
   const [questions, setQuestions] = useState<QuestionDoc[]>([]);
@@ -382,6 +386,37 @@ const App: React.FC = () => {
 
     setActiveQuizCategory(null);
   };
+  
+  // ADDED: Action to post an answer and close the question
+  const handlePostAnswer = async (questionId: string, body: string) => {
+    if (!db || !userId) return;
+
+    const questionRef = doc(db, getPublicCollectionPath('questions'), questionId);
+    const answersCollectionRef = collection(questionRef, 'answers');
+
+    try {
+      // 1. Post the answer to the subcollection
+      await addDoc(answersCollectionRef, {
+        body,
+        authorId: userId,
+        authorDisplayName: displayName,
+        createdAt: serverTimestamp(),
+        createdAtMs: Date.now(),
+      });
+
+      // 2. Update the parent question status to 'Closed'
+      await setDoc(questionRef, { status: 'Closed' }, { merge: true });
+
+      // 3. Reset state
+      setAppState('feed');
+      setActiveQuestion(null);
+    } catch (e) {
+      console.error('Error posting answer:', e);
+      // NOTE: This error is often a Security Rules issue.
+      setError('Could not post answer. Check network connection or database permissions.');
+    }
+  };
+
 
   // -------------------------------------------------------------
   // Components
@@ -684,6 +719,66 @@ const App: React.FC = () => {
       </div>
     );
   };
+  
+  // ADDED: View for posting a verified answer
+  const AnswerView: React.FC = () => {
+    // Note: If you want this form to be full width, remove max-w-xl mx-auto
+    if (!activeQuestion) {
+      setAppState('feed');
+      return null;
+    }
+
+    const [answerBody, setAnswerBody] = useState<string>('');
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (answerBody.trim()) {
+        void handlePostAnswer(activeQuestion.id, answerBody);
+      }
+    };
+
+    return (
+      <div className="p-8 max-w-xl mx-auto bg-white rounded-xl shadow-2xl border border-green-200">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+          <Send size={24} className="mr-2 text-green-600" />
+          Answering: {activeQuestion.title}
+        </h2>
+        <p className="text-gray-600 mb-4 border-l-4 border-gray-200 pl-4 italic">
+          Question: {activeQuestion.body}
+        </p>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="answerBody" className="block text-sm font-medium text-gray-700">
+              Your Expert Answer
+            </label>
+            <textarea
+              id="answerBody"
+              value={answerBody}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setAnswerBody(e.target.value)}
+              rows={6}
+              placeholder="Provide a detailed, helpful, and verified answer..."
+              className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 shadow-md flex items-center justify-center"
+          >
+            <Send size={18} className="mr-2" />
+            Post Verified Answer
+          </button>
+        </form>
+        <button
+          onClick={() => { setAppState('feed'); setActiveQuestion(null); }}
+          className="mt-6 text-gray-600 hover:text-gray-800 transition duration-150 font-medium w-full text-center"
+        >
+          &larr; Cancel
+        </button>
+      </div>
+    );
+  };
 
   const QuestionCard: React.FC<{ question: QuestionDoc }> = ({ question }) => {
     const isExpert = currentUserVerifications.verifiedCategories?.includes(question.category);
@@ -710,13 +805,19 @@ const App: React.FC = () => {
             Asked by:{' '}
             <span className="font-semibold text-gray-700">{question.authorId?.substring(0, 8)}...</span>
           </span>
-          {isExpert ? (
+          {isExpert && question.status === 'Open' ? (
+            // UPDATED: Button now sets state to launch AnswerView
             <button
-              onClick={() => alert(`Simulating posting a verified answer to: ${question.title}`)}
+              onClick={() => {
+                setActiveQuestion(question);
+                setAppState('answer');
+              }}
               className="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-1.5 px-3 rounded-lg flex items-center transition duration-150"
             >
               <Send size={16} className="mr-1" /> Answer
             </button>
+          ) : isExpert && question.status === 'Closed' ? (
+            <span className="text-sm text-green-600 font-medium">Answered (Expert)</span>
           ) : (
             <span className="text-sm text-yellow-600 font-medium">Get Verified to Answer</span>
           )}
@@ -779,6 +880,9 @@ const App: React.FC = () => {
         return <PostQuestionView />;
       case 'quiz':
         return <QuizCategorySelectionView />;
+      // ADDED: New case for the Answer View
+      case 'answer': 
+        return <AnswerView />;
       case 'feed':
       default:
         return <QuestionFeedView />;
