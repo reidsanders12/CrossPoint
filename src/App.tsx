@@ -105,6 +105,25 @@ const QUIZ_DATA: QuizData = {
       options: ['Diffraction', 'Refraction', 'Polarization', 'Interference'],
       answer: 'Refraction',
     },
+    // --- Added Question ---
+    {
+      question:
+        'What is the term for the maximum displacement or distance moved by a point on a vibrating body or wave measured from its equilibrium position?',
+      options: ['Frequency', 'Wavelength', 'Amplitude', 'Period'],
+      answer: 'Amplitude',
+    },
+    // --- Added Question ---
+    {
+      question:
+        'Which physicist developed the theory of special and general relativity?',
+      options: [
+        'Isaac Newton',
+        'Galileo Galilei',
+        'Albert Einstein',
+        'Niels Bohr',
+      ],
+      answer: 'Albert Einstein',
+    },
   ],
   'Web Development': [
     {
@@ -119,6 +138,25 @@ const QUIZ_DATA: QuizData = {
       options: ['props', 'state', 'context', 'refs'],
       answer: 'state',
     },
+    // --- Added Question ---
+    {
+      question:
+        'Which semantic HTML5 element should be used for independent, self-contained content, such as a blog post or news story?',
+      options: ['<section>', '<main>', '<article>', '<aside>'],
+      answer: '<article>',
+    },
+    // --- Added Question ---
+    {
+      question:
+        'What is the primary purpose of the "z-index" CSS property?',
+      options: [
+        'To control text alignment',
+        'To change the stacking order of positioned elements',
+        'To define element width',
+        'To manage text overflow',
+      ],
+      answer: 'To change the stacking order of positioned elements',
+    },
   ],
   'Financial Modeling': [
     {
@@ -130,6 +168,69 @@ const QUIZ_DATA: QuizData = {
         'New Project Valuation',
       ],
       answer: 'Net Present Value',
+    },
+    // --- Added Question ---
+    {
+      question:
+        'What is the formula for calculating the Weighted Average Cost of Capital (WACC)?',
+      options: [
+        '$E/V \\cdot Re + D/V \\cdot Rd$',
+        '$E/V \\cdot Re + D/V \\cdot Rd(1-Tc)$',
+        '$Re \\cdot Rd / (Re + Rd)$',
+        '$E/V + D/V$',
+      ],
+      answer: '$E/V \\cdot Re + D/V \\cdot Rd(1-Tc)$',
+    },
+  ],
+  // --- New Category: Computer Science ---
+  'Computer Science': [
+    {
+      question: 'What is a stack in programming, and what is its primary access method?',
+      options: [
+        'A queue; FIFO (First-In, First-Out)',
+        'A linked list; Random Access',
+        'A linear data structure; LIFO (Last-In, First-Out)',
+        'A hash map; Key-Value Access',
+      ],
+      answer: 'A linear data structure; LIFO (Last-In, First-Out)',
+    },
+    {
+      question: 'What is the time complexity of searching for an element in a balanced Binary Search Tree (BST)?',
+      options: ['$O(1)$', '$O(n)$', '$O(\\log n)$', '$O(n^2)$'],
+      answer: '$O(\\log n)$',
+    },
+  ],
+  // --- New Category: History ---
+  History: [
+    {
+      question: 'The signing of which document formally ended World War I?',
+      options: [
+        'Treaty of Paris',
+        'Treaty of Versailles',
+        'Geneva Convention',
+        'Magna Carta',
+      ],
+      answer: 'Treaty of Versailles',
+    },
+    {
+      question: 'Who was the first Roman Emperor?',
+      options: ['Julius Caesar', 'Nero', 'Augustus', 'Constantine'],
+      answer: 'Augustus',
+    },
+  ],
+  // --- New Category: Biology ---
+  Biology: [
+    {
+      question:
+        'What organelle is primarily responsible for generating the majority of the cell’s supply of ATP (adenosine triphosphate)?',
+      options: ['Nucleus', 'Mitochondrion', 'Ribosome', 'Endoplasmic Reticulum'],
+      answer: 'Mitochondrion',
+    },
+    {
+      question:
+        'What is the process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll?',
+      options: ['Respiration', 'Transpiration', 'Photosynthesis', 'Fermentation'],
+      answer: 'Photosynthesis',
     },
   ],
 };
