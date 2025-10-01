@@ -218,7 +218,7 @@ const QUIZ_DATA: QuizData = {
       answer: 'Augustus',
     },
   ],
-  // --- New Category: Biology ---
+  // --- Biology ---
   Biology: [
     {
       question:
@@ -696,7 +696,7 @@ const App: React.FC = () => {
     const availableCategories = Object.keys(QUIZ_DATA);
 
     return (
-      <div className="p-8 max-w-2xl mx-auto bg-white rounded-xl shadow-2xl border border-purple-200">
+      <div className="p-8 bg-white rounded-xl shadow-2xl border border-purple-200">
         <h2 className="text-3xl font-bold text-gray-800 mb-4 flex items-center">
           <Zap size={24} className="mr-2 text-purple-600" />
           Expert Verification Quiz
@@ -750,7 +750,7 @@ const App: React.FC = () => {
     };
 
     return (
-      <div className="p-8 max-w-xl mx-auto bg-white rounded-xl shadow-2xl border border-indigo-200">
+      <div className="p-8 bg-white rounded-xl shadow-2xl border border-indigo-200">
         <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
           <Edit size={24} className="mr-2 text-indigo-600" />
           Post a New Question
@@ -839,7 +839,7 @@ const App: React.FC = () => {
     };
 
     return (
-      <div className="p-8 max-w-xl mx-auto bg-white rounded-xl shadow-2xl border border-green-200">
+      <div className="p-8 bg-white rounded-xl shadow-2xl border border-green-200">
         <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
           <Send size={24} className="mr-2 text-green-600" />
           Answering: {activeQuestion.title}
@@ -927,9 +927,9 @@ const App: React.FC = () => {
     );
   };
 
-  const QuestionFeedView: React.FC = () => (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6 max-w-6xl mx-auto">
+const QuestionFeedView: React.FC = () => (
+    <div>
+      <div className="flex justify-between items-center mb-6 p-6">
         <h2 className="text-3xl font-bold text-gray-800">Latest Questions</h2>
         <button
           onClick={() => setAppState('post')}
@@ -940,7 +940,8 @@ const App: React.FC = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      {/* 2. Change this line: Removed max-w-6xl mx-auto */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         {questions.length === 0 ? (
           <div className="md:col-span-3 text-center p-12 bg-gray-50 rounded-xl">
             <p className="text-xl text-gray-500">No questions posted yet. Be the first!</p>
@@ -999,7 +1000,7 @@ const App: React.FC = () => {
       <Header />
       <main className="py-8">{renderContent()}</main>
       <footer className="p-4 text-center text-sm text-gray-500 border-t mt-12">
-        Crosspoint - Built with React and Firebase (App ID: {APP_ID})
+        Crosspoint - Built with React and Firebase
       </footer>
     </div>
   );
